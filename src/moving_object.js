@@ -17,10 +17,9 @@ MovingObject.prototype.draw = function(ctx) {
 
 MovingObject.prototype.move = function() {
   let [posX, posY] = this.pos;
-  this.pos = [posX + 1, posY + 1];
-
   let [velX, velY] = this.vel;
-  this.vel = [velX + 1, velY + 1];
+  
+  this.pos = [posX + velX, posY + velY];
 }
 
 module.exports = MovingObject;
