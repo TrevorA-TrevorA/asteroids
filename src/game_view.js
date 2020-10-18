@@ -9,6 +9,7 @@ GameView.prototype.start = function() {
   setInterval(() => {
     this.game.moveAsteroids();
     this.game.draw(this.ctx);
+    this.game.checkCollisions();
   }, 20);
 }
 

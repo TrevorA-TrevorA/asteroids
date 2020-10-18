@@ -7,7 +7,7 @@ function Game() {
 
 Game.DIM_X = 1200;
 Game.DIM_Y = 700;
-Game.NUM_ASTEROIDS = 25;
+Game.NUM_ASTEROIDS = 10;
 
 Game.prototype.addAsteroids = function() {
   for (let n = 0; n < Game.NUM_ASTEROIDS; n++) {
@@ -56,15 +56,15 @@ Game.prototype.wrap = function(pos, vel, rad) {
   let [velX, velY] = vel;
   let yDiff = ((1200 + rad) / Math.abs(velX)) * velY;
   let xDiff = ((700 + rad) / Math.abs(velY)) * velX;
-  let adjX = this.preventOffscreen(x, xDiff, rad)
-  let adjY = this.preventOffscreen(y, yDiff, rad)
+  let adjX = this.preventDrift(x, xDiff, rad)
+  let adjY = this.preventDrift(y, yDiff, rad)
 
   if (offscreenX && offscreenY) return [oppX, oppY];
   
   return offscreenX ? [oppX, adjY] : [adjX, oppY];
 }
 
-Game.prototype.preventOffscreen = function(pos, diff, rad) {
+Game.prototype.preventDrift = function(pos, diff, rad) {
   if (pos - diff < -rad) {
     adjusted = -rad;
   } else if (pos - diff > 1200 + rad) {
@@ -73,6 +73,22 @@ Game.prototype.preventOffscreen = function(pos, diff, rad) {
     adjusted = pos - diff;
   }
   return adjusted;
+}
+
+Game.prototype.checkCollisions = function() {
+  for (let i = 0; i < this.asteroids.length; i++) {
+    for (let j = 0; j < this.asteroids.length; j++) {
+      if (this.asteroids[i] === this.asteroids[j]) continue;
+      if (this.asteroids[i].hasCollidedWith(this.asteroids[j])) {
+        alert('collision!');
+        this.asteroids[i].collideWith(this.asteroids[j]);
+      }
+    }
+  }
+}
+
+Game.prototype.remove = function(asteroidIndex) {
+  this.asteroids.splice(asteroidIndex, 1);
 }
 
 module.exports = Game;
