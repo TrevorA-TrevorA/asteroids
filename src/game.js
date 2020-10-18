@@ -7,11 +7,12 @@ function Game() {
 
 Game.DIM_X = 1200;
 Game.DIM_Y = 700;
-Game.NUM_ASTEROIDS = 30;
+Game.NUM_ASTEROIDS = 25;
 
 Game.prototype.addAsteroids = function() {
   for (let n = 0; n < Game.NUM_ASTEROIDS; n++) {
     const pos = this.randomPosition();
+    const radius = Asteroid.getRadius();
     const asteroid = new Asteroid(pos, this);
     asteroid.draw(ctx);
     this.asteroids.push(asteroid);
@@ -53,12 +54,25 @@ Game.prototype.wrap = function(pos, vel, rad) {
   }
 
   let [velX, velY] = vel;
-  let yDiff = (1230 / Math.abs(velX)) * velY
-  let xDiff = (700 / Math.abs(velY)) * velX;
+  let yDiff = ((1200 + rad) / Math.abs(velX)) * velY;
+  let xDiff = ((700 + rad) / Math.abs(velY)) * velX;
+  let adjX = this.preventOffscreen(x, xDiff, rad)
+  let adjY = this.preventOffscreen(y, yDiff, rad)
 
   if (offscreenX && offscreenY) return [oppX, oppY];
+  
+  return offscreenX ? [oppX, adjY] : [adjX, oppY];
+}
 
-  return offscreenX ? [oppX, y - yDiff] : [x - xDiff, oppY];
+Game.prototype.preventOffscreen = function(pos, diff, rad) {
+  if (pos - diff < -rad) {
+    adjusted = -rad;
+  } else if (pos - diff > 1200 + rad) {
+    adjusted = 1200 + rad;
+  } else {
+    adjusted = pos - diff;
+  }
+  return adjusted;
 }
 
 module.exports = Game;
