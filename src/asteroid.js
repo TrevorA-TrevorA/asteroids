@@ -1,9 +1,23 @@
 const Util = require('./util.js');
 const MovingObject = require('./moving_object.js');
 
+Util.inherits(Asteroid, MovingObject);
+
 function Asteroid(pos, game) {
   MovingObject.call(this, { pos: pos, vel: Util.randomVector(5),
-    radius: Asteroid.getRadius(), color: this.COLOR, game: game })
+    radius: Asteroid.getRadius(), color: Asteroid.COLOR, game: game })
+}
+
+Asteroid.prototype.collideWith = function(otherObject) {
+  const selfIndex = this.game.asteroids.indexOf(this);
+  this.game.remove(selfIndex);
+
+  if (otherObject instanceof Ship) {
+    otherObject.relocate();
+  } else {
+    const otherIndex = this.game.asteroids.indexOf(otherObject);
+    this.game.remove(otherIndex);
+  }
 }
 
 Asteroid.getRadius = function() {
@@ -18,7 +32,5 @@ Asteroid.getRadius = function() {
 }
 
 Asteroid.COLOR = '#800000';
-
-Util.inherits(Asteroid, MovingObject);
 
 module.exports = Asteroid;

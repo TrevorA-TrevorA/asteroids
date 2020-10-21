@@ -12,7 +12,7 @@ MovingObject.prototype.draw = function(ctx) {
   ctx.beginPath();
   let [x, y] = this.pos
   ctx.arc(x, y, this.radius, 0, 2 * Math.PI);
-  ctx.fillStyle = '#800000';
+  ctx.fillStyle = this.color;
   ctx.fill();
 }
 
@@ -33,11 +33,7 @@ MovingObject.prototype.hasCollidedWith = function(OtherObject) {
 }
 
 MovingObject.prototype.collideWith = function(otherObject) {
-  const selfIndex = this.game.asteroids.indexOf(this);
-  this.game.remove(selfIndex);
-
-  const otherIndex = this.game.asteroids.indexOf(otherObject);
-  this.game.remove(otherIndex);
+    
 }
 
 module.exports = MovingObject;
