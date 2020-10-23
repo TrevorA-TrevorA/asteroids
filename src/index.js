@@ -4,6 +4,7 @@ const Asteroid = require('./asteroid.js');
 const Game = require('./game.js');
 const GameView = require('./game_view.js');
 const Ship = require('./ship.js');
+const Bullet = require('./bullet.js')
 
 window.MovingObject = MovingObject;
 window.Asteroid = Asteroid;
@@ -11,6 +12,7 @@ window.Util = Util;
 window.Game = Game;
 window.GameView = GameView;
 window.Ship = Ship;
+window.Bullet = Bullet;
 
 document.addEventListener('DOMContentLoaded', function() {
   const canvas = document.getElementById('game-canvas');

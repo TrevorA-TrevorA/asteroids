@@ -12,6 +12,9 @@ MovingObject.prototype.draw = function(ctx) {
   ctx.beginPath();
   let [x, y] = this.pos
   ctx.arc(x, y, this.radius, 0, 2 * Math.PI);
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = 'black';
+  ctx.stroke();
   ctx.fillStyle = this.color;
   ctx.fill();
 }
@@ -32,8 +35,6 @@ MovingObject.prototype.hasCollidedWith = function(OtherObject) {
   return distance < this.radius + OtherObject.radius ? true : false;
 }
 
-MovingObject.prototype.collideWith = function(otherObject) {
-    
-}
+MovingObject.prototype.collideWith = function(otherObject) {}
 
 module.exports = MovingObject;

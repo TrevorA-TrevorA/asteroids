@@ -10,13 +10,13 @@ function Asteroid(pos, game) {
 
 Asteroid.prototype.collideWith = function(otherObject) {
   const selfIndex = this.game.asteroids.indexOf(this);
-  this.game.remove(selfIndex);
+  this.game.remove(this);
 
   if (otherObject instanceof Ship) {
     otherObject.relocate();
   } else {
     const otherIndex = this.game.asteroids.indexOf(otherObject);
-    this.game.remove(otherIndex);
+    this.game.remove(this);
   }
 }
 

@@ -17,7 +17,7 @@ GameView.prototype.start = function() {
 
 GameView.prototype.bindKeys = function() {
   const ship = this.game.ship;
-  document.addEventListener('keydown', ship.stearShip.bind(ship));
+  document.addEventListener('keydown', ship.shipAction.bind(ship));
 }
 
 module.exports = GameView;
