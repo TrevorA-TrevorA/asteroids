@@ -76,6 +76,7 @@ Ship.prototype.left = function() {
     this.angle -= 0.1;
   } else if (this.angle === 0) {
     this.stop();
+    this.angle = Math.PI;
   } else {
     this.angle = Math.PI;
   }
@@ -98,6 +99,7 @@ Ship.prototype.right = function() {
     this.angle += 0.1;
   } else if (this.angle === Math.PI) {
     this.stop();
+    this.angle = 0;
   } else {
     this.angle = 0;
   }
@@ -121,6 +123,7 @@ Ship.prototype.up = function() {
     this.angle -= 0.1;
   } else if (this.angle === 0.5 * Math.PI) {
     this.stop()
+    this.angle = upward;
   } else {
     this.angle = upward;
   }
@@ -144,6 +147,7 @@ Ship.prototype.down = function() {
     this.angle += 0.1;
   } else if (this.angle === 1.5 * Math.PI) {
     this.stop()
+    this.angle = downward;
   } else {
     this.angle = downward;
   }

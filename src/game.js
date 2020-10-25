@@ -7,6 +7,7 @@ function Game() {
   this.bullets = [];
   this.addAsteroids();
   this.ship = new Ship(this.randomPosition(), this);
+  this.delta;
 }
 
 Game.DIM_X = 1200;

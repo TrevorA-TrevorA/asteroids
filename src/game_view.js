@@ -3,14 +3,20 @@ const Game = require('./game.js')
 function GameView(ctx) {
   this.game = new Game;
   this.ctx = ctx;
+  this.timeMarker = 0;
 }
 
 GameView.prototype.start = function() {
-  setInterval(() => {
+  const frame = timestamp => {
+    this.game.delta = timestamp - this.timeMarker || 1;
     this.game.moveObjects();
     this.game.draw(this.ctx);
     this.game.checkCollisions();
-  }, 20);
+    this.timeMarker = timestamp;
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
 
   this.bindKeys();
 }

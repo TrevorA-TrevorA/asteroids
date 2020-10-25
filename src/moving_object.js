@@ -23,8 +23,9 @@ MovingObject.prototype.move = function() {
   const wrapped = this.game.wrap(this.pos, this.vel, this.radius);
   let [posX, posY] = this.pos;
   let [velX, velY] = this.vel;
+  let [vX, vY] = [(velX * this.game.delta / 20), (velY * this.game.delta) / 20];
   
-  this.pos = wrapped ? wrapped : [posX + velX, posY + velY];
+  this.pos = wrapped ? wrapped : [posX + vX, posY + vY];
 }
 
 MovingObject.prototype.hasCollidedWith = function(OtherObject) {
