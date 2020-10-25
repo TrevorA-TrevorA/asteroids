@@ -27,8 +27,9 @@ Bullet.prototype.move = function() {
   } else {
     let [posX, posY] = this.pos;
     let [velX, velY] = this.vel;
+    let [vX, vY] = [(velX * this.game.delta / 20), (velY * this.game.delta) / 20];
 
-    this.pos = [posX + velX, posY + velY];
+    this.pos = [posX + vX, posY + vY];
   }
 }
 
