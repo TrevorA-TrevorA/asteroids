@@ -9,13 +9,7 @@ function Asteroid(pos, game) {
 }
 
 Asteroid.prototype.collideWith = function(otherObject) {
-  const selfIndex = this.game.asteroids.indexOf(this);
-  this.game.remove(this);
-
-  if (otherObject instanceof Ship) {
-    otherObject.relocate();
-  } else {
-    const otherIndex = this.game.asteroids.indexOf(otherObject);
+  if (otherObject instanceof Bullet) {
     this.game.remove(this);
   }
 }

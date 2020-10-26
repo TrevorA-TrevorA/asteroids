@@ -16,18 +16,64 @@ function Ship(pos, game) {
     color: Ship.COLOR, game: game})
 }
 
-Ship.prototype.draw = function (ctx) {
+Ship.prototype.draw = function(ctx) {
   const xRad = Ship.XRADIUS
   const yRad = Ship.YRADIUS;
   rotation = this.angle;
-
+  let [x, y] = this.pos;
+  
   ctx.beginPath();
-  let [x, y] = this.pos
   ctx.ellipse(x, y, xRad, yRad, rotation, 0, 2 * Math.PI);
-  ctx.lineWidth = 5;
   ctx.strokeStyle = 'black';
+  ctx.lineWidth = 5;
   ctx.stroke();
   ctx.fillStyle = this.color;
+  ctx.fill();
+  this.drawFins(ctx);
+  this.drawWindow(-20, ctx);
+  this.drawWindow(5, ctx);
+  this.drawWindow(30, ctx);
+}
+
+Ship.prototype.drawFins = function(ctx) {
+  const xRad = Ship.XRADIUS;
+  const yRad = Ship.YRADIUS;
+  let [x, y] = this.pos;
+
+  let leftStartX = x + yRad * Math.sin(this.angle);
+  let leftStartY = y - yRad * Math.cos(this.angle);
+  let leftConX = leftStartX + 40 * Math.cos(this.angle + 0.75 * Math.PI);
+  let leftConY = leftStartY - 40 * Math.sin(this.angle + 0.75 * Math.PI);
+  let leftEndX = x + 90 * Math.cos(this.angle - 0.97 * Math.PI);
+  let leftEndY = y + 90 * Math.sin(this.angle - 0.97 * Math.PI);
+
+  let rightStartX = x - yRad * Math.sin(this.angle);
+  let rightStartY = y + yRad * Math.cos(this.angle);
+  let rightConX = rightStartX + 40 * Math.cos(this.angle + 0.75 * Math.PI);
+  let rightConY = rightStartY + 40 * Math.sin(this.angle + 0.75 * Math.PI);
+  let rightEndX = x + 90 * Math.cos(this.angle + 0.97 * Math.PI);
+  let rightEndY = y + 90 * Math.sin(this.angle + 0.97 * Math.PI);
+
+  ctx.beginPath();
+  ctx.moveTo(leftStartX, leftStartY);
+  ctx.quadraticCurveTo(leftConX, leftConY, leftEndX, leftEndY);
+  ctx.moveTo(rightStartX, rightStartY);
+  ctx.quadraticCurveTo(rightConX, rightConY, rightEndX, rightEndY);
+  ctx.lineWidth = 5;
+  ctx.fillStyle = '#100000';
+  ctx.stroke();
+  ctx.fill();
+}
+
+Ship.prototype.drawWindow = function(dist, ctx) {
+  let [x, y] = this.pos;
+  let startX = x + dist * Math.cos(this.angle);
+  let startY = y + dist * Math.sin(this.angle);
+  ctx.beginPath();
+  ctx.fillStyle = 'black';
+  ctx.lineWidth = 2;
+  ctx.arc(startX, startY, 8, 0, 2 * Math.PI);
+  ctx.stroke();
   ctx.fill();
 }
 
